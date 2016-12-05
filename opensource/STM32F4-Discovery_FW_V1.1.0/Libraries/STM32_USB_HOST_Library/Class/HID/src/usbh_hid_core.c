@@ -177,7 +177,7 @@ USBH_Class_cb_TypeDef  HID_cb =
 */
 static USBH_Status USBH_HID_InterfaceInit ( USB_OTG_CORE_HANDLE *pdev, 
                                            void *phost)
-{	
+{    
   uint8_t maxEP;
   USBH_HOST *pphost = phost;
     
@@ -193,7 +193,7 @@ static USBH_Status USBH_HID_InterfaceInit ( USB_OTG_CORE_HANDLE *pdev,
     {
       HID_Machine.cb = &HID_KEYBRD_cb;
     }
-    else if(pphost->device_prop.Itf_Desc[0].bInterfaceProtocol  == HID_MOUSE_BOOT_CODE)		  
+    else if(pphost->device_prop.Itf_Desc[0].bInterfaceProtocol  == HID_MOUSE_BOOT_CODE)          
     {
       HID_Machine.cb = &HID_MOUSE_cb;
     }
@@ -271,7 +271,7 @@ static USBH_Status USBH_HID_InterfaceInit ( USB_OTG_CORE_HANDLE *pdev,
 */
 void USBH_HID_InterfaceDeInit ( USB_OTG_CORE_HANDLE *pdev,
                                void *phost)
-{	
+{    
    //USBH_HOST *pphost = phost;
     
   if(HID_Machine.hc_num_in != 0x00)

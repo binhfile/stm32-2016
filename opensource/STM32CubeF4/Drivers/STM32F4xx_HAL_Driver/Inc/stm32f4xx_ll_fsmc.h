@@ -115,7 +115,7 @@ typedef struct
                                               This parameter can be a value of @ref FSMC_Write_Burst                      */
   
   uint32_t PageSize;                     /*!< Specifies the memory page size.
-                                              This parameter can be a value of @ref FMC_Page_Size                   */	
+                                              This parameter can be a value of @ref FMC_Page_Size                   */    
 
 }FSMC_NORSRAM_InitTypeDef;
 

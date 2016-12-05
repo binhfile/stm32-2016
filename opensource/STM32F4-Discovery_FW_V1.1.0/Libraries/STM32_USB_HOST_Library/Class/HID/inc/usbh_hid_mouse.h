@@ -80,7 +80,7 @@ HID_MOUSE_Data_TypeDef;
   */ 
 
 extern HID_cb_TypeDef HID_MOUSE_cb;
-extern HID_MOUSE_Data_TypeDef	 HID_MOUSE_Data;
+extern HID_MOUSE_Data_TypeDef     HID_MOUSE_Data;
 /**
   * @}
   */ 

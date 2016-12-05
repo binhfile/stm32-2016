@@ -458,7 +458,7 @@ static  void  BSP_IntHandler (CPU_DATA  int_id)
 
 static  void  BSP_IntHandlerDummy (void)
 {
-	while (DEF_TRUE) {
+    while (DEF_TRUE) {
         ;
     }
 }

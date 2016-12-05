@@ -376,14 +376,14 @@ static int8_t SCSI_RequestSense (uint8_t lun, uint8_t *params)
     MSC_BOT_Data[i] = 0;
   }
   
-  MSC_BOT_Data[0]	= 0x70;		
-  MSC_BOT_Data[7]	= REQUEST_SENSE_DATA_LEN - 6;	
+  MSC_BOT_Data[0]    = 0x70;        
+  MSC_BOT_Data[7]    = REQUEST_SENSE_DATA_LEN - 6;    
   
   if((SCSI_Sense_Head != SCSI_Sense_Tail)) {
     
-    MSC_BOT_Data[2]     = SCSI_Sense[SCSI_Sense_Head].Skey;		
-    MSC_BOT_Data[12]    = SCSI_Sense[SCSI_Sense_Head].w.b.ASCQ;	
-    MSC_BOT_Data[13]    = SCSI_Sense[SCSI_Sense_Head].w.b.ASC;	
+    MSC_BOT_Data[2]     = SCSI_Sense[SCSI_Sense_Head].Skey;        
+    MSC_BOT_Data[12]    = SCSI_Sense[SCSI_Sense_Head].w.b.ASCQ;    
+    MSC_BOT_Data[13]    = SCSI_Sense[SCSI_Sense_Head].w.b.ASC;    
     SCSI_Sense_Head++;
     
     if (SCSI_Sense_Head == SENSE_LIST_DEEPTH)

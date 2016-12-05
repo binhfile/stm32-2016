@@ -19,19 +19,23 @@
 #include <drv_gpio.h>
 #include <sys/reboot.h>
 
+#include "cc1100/cc1100.h"
 
-int					g_fd_led[4] 		= {-1};
+struct CC1101 g_cc1101;
+
+
+int                 g_fd_led[4]         = {-1};
 int                 g_fd_button         = -1;
 int                 g_fd_debug          = -1;
 
-uint8_t				g_debug_cmd			= 0;
+uint8_t             g_debug_cmd            = 0;
 
-#define             APP_THREAD_COUNT    			5
+#define             APP_THREAD_COUNT                3
 pthread_t           g_thread[APP_THREAD_COUNT];
 pthread_attr_t      g_thread_attr[APP_THREAD_COUNT];
 sem_t               g_thread_startup[APP_THREAD_COUNT-1];
-int 				g_thread_index = 1;
-sem_t				g_sem_debug;
+int                 g_thread_index = 1;
+sem_t                g_sem_debug;
 mqd_t               g_debug_tx_buffer;
 
 #define DEFINE_THREAD(fxn, stack_size, priority) {\
@@ -44,8 +48,6 @@ mqd_t               g_debug_tx_buffer;
 void *Thread_Startup(void*);
 void *Thread_DebugTX(void*);
 void *Thread_DebugRx(void*);
-void *Thread_RFIntr(void*);
-void *Thread_MiwiTask(void*);
 
 int __errno;
 int main(void)
@@ -93,19 +95,19 @@ void LREP(char* s, ...){
     sem_post(&g_sem_debug);
 }
 uint8_t kbhit(int timeout){
-	g_debug_cmd = 0;
+    g_debug_cmd = 0;
     while(g_debug_cmd == 0 && timeout > 0){
-    	usleep_s(1000* 100);
-    	timeout -= 100;
+        usleep_s(1000* 100);
+        timeout -= 100;
     }
     return g_debug_cmd;
 }
 uint8_t kb_value(){ return g_debug_cmd;}
 void  *Thread_Startup (void *p_arg)
 {
-	int i;
-	unsigned int uival;
-	uint8_t userInput = 0;
+    int i;
+    unsigned int uival;
+    uint8_t userInput = 0;
     struct termios2 opt;
     struct timespec timeout;
 
@@ -116,11 +118,11 @@ void  *Thread_Startup (void *p_arg)
     board_register_devices();
 
     g_fd_led[0] = open_dev("led-green", 0);
-    g_fd_led[1] = open_dev("led-red", 	0);
+    g_fd_led[1] = open_dev("led-red",     0);
     g_fd_led[2] = open_dev("led-blue", 0);
     g_fd_led[3] = open_dev("led-orange", 0);
 
-    g_fd_button = open_dev("button", 	0);
+    g_fd_button = open_dev("button",     0);
     // open usart
     g_fd_debug = open_dev("usart-1", O_RDWR);
     if(g_fd_debug >= 0){
@@ -151,24 +153,45 @@ void  *Thread_Startup (void *p_arg)
         LREP("\r\n____________________________");
         LREP("\r\n|-------- startup ---------|\r\n");
     }else{
-    	timeout.tv_sec = 0;
-    	timeout.tv_nsec = 1000000*100;
+        timeout.tv_sec = 0;
+        timeout.tv_nsec = 1000000*100;
         while(1){
             LED_TOGGLE(RED);
             nanosleep(&timeout, 0);
         };
     }
     if(g_fd_button < 0){
-    	LREP("g_fd_button failed\r\n");
+        LREP("g_fd_button failed\r\n");
     }
+    LED_OFF(RED);
+    // spidev
+    g_cc1101.spi_fd = open_dev("spi-1", O_RDWR);
+    if(g_cc1101.spi_fd < 0){
+        LREP("open spi device failed\r\n");
+    }
+    else{
+        uival = SPI_MODE_0;
+        if(ioctl(g_cc1101.spi_fd, SPI_IOC_WR_MODE, (unsigned int)&uival) != 0) LREP("ioctl spi mode failed\r\n");
+        uival = 5000000;
+        if(ioctl(g_cc1101.spi_fd, SPI_IOC_WR_MAX_SPEED_HZ, (unsigned int)&uival) != 0) LREP("ioctl spi speed failed\r\n");
+        else{
+            uival = 0;
+            if(ioctl(g_cc1101.spi_fd, SPI_IOC_RD_MAX_SPEED_HZ, (unsigned int)&uival) == 0) LREP("ioctl spi speed = %u\r\n", uival);
+        }
+    }
+    g_cc1101.cs_fd = open_dev("spi-1-cs", 0);
+    if(g_cc1101.cs_fd < 0) LREP("open spi cs device failed\r\n");
+    
+    i = cc1101_init(&g_cc1101);
+    if(i) LED_ON(RED);
 
     for(i = 0; i < APP_THREAD_COUNT-1; i++)
         sem_post(&g_thread_startup[i]);
 
     sleep(1);
 
-	timeout.tv_sec = 0;
-	timeout.tv_nsec = 1000000*250;
+    timeout.tv_sec = 0;
+    timeout.tv_nsec = 1000000*250;
     while (1) {                                          /* Task body, always written as an infinite loop.       */
         nanosleep(&timeout, 0);
     }
@@ -184,7 +207,7 @@ void *Thread_DebugTX(void* pvParameters){
     timeout.tv_sec = 1;
     timeout.tv_nsec = 0;
     while(1){
-    	len = mq_timedreceive(g_debug_tx_buffer, data, 32, 0, &timeout);
+        len = mq_timedreceive(g_debug_tx_buffer, data, 32, 0, &timeout);
         if(len > 0)
             write(g_fd_debug, data, len);
     }
@@ -195,6 +218,7 @@ void *Thread_DebugRx(void* pvParameters){
     sem_t* sem_startup = (sem_t*)pvParameters;
     fd_set readfs;
     struct timeval timeout;
+    const char* sz = "hello";
 
     FD_CLR(g_fd_debug, &readfs);
     timeout.tv_sec  = 0;
@@ -213,11 +237,12 @@ void *Thread_DebugRx(void* pvParameters){
                     if(u8val == 'r') reboot();
                 }
             }else{
-            	LREP("fd %04X %04X\r\n", g_fd_debug, readfs);
+                LREP("fd %04X %04X\r\n", g_fd_debug, readfs);
             }
         }else if(len == 0){
-        	LED_TOGGLE(BLUE);
-            LED_TOGGLE(RED);
+            LED_TOGGLE(BLUE);
+            
+            cc1101_write_data(&g_cc1101, sz, 5);
         }
         else{
             LREP("select uart failed %d.\r\n", len);

@@ -716,7 +716,7 @@ HAL_LPTIM_StateTypeDef HAL_LPTIM_GetState(LPTIM_HandleTypeDef *hlptim);
 #define IS_LPTIM_TRIG_SAMPLE_TIME(__SAMPLETIME__)   (((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_DIRECTTRANSITION) || \
                                                      ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_2TRANSITIONS    ) || \
                                                      ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_4TRANSITIONS    ) || \
-                                                     ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_8TRANSITIONS    ))		
+                                                     ((__SAMPLETIME__) == LPTIM_TRIGSAMPLETIME_8TRANSITIONS    ))        
 
 #define IS_LPTIM_UPDATE_MODE(__MODE__)              (((__MODE__) == LPTIM_UPDATE_IMMEDIATE) || \
                                                      ((__MODE__) == LPTIM_UPDATE_ENDOFPERIOD))

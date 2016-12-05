@@ -2,10 +2,10 @@
 #define DEBUG_H__
 #include <drv_gpio.h>
 enum LED{
-	LED_GREEN = 0,
-	LED_RED,
-	LED_BLUE,
-	LED_ORANGE
+    LED_GREEN = 0,
+    LED_RED,
+    LED_BLUE,
+    LED_ORANGE
 };
 void LED_ON(int index);
 void LED_OFF(int index);

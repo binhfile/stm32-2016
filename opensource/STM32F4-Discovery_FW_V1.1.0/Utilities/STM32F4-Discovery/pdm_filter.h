@@ -36,12 +36,12 @@
 
 /* Exported types ------------------------------------------------------------*/
 typedef struct {
-	uint16_t Fs;
-	float LP_HZ;
-	float HP_HZ;
-	uint16_t In_MicChannels;
-	uint16_t Out_MicChannels;
-	char InternalFilter[34];
+    uint16_t Fs;
+    float LP_HZ;
+    float HP_HZ;
+    uint16_t In_MicChannels;
+    uint16_t Out_MicChannels;
+    char InternalFilter[34];
 } PDMFilter_InitStruct;
 
 /* Exported constants --------------------------------------------------------*/

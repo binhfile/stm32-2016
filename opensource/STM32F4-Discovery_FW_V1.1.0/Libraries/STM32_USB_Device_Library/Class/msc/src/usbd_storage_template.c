@@ -59,13 +59,13 @@ int8_t STORAGE_GetMaxLun (void);
 const int8_t  STORAGE_Inquirydata[] = {//36
   
   /* LUN 0 */
-  0x00,		
-  0x80,		
-  0x02,		
+  0x00,        
+  0x80,        
+  0x02,        
   0x02,
   (USBD_STD_INQUIRY_LENGTH - 5),
   0x00,
-  0x00,	
+  0x00,    
   0x00,
   'S', 'T', 'M', ' ', ' ', ' ', ' ', ' ', /* Manufacturer : 8 bytes */
   'P', 'r', 'o', 'd', 'u', 't', ' ', ' ', /* Product      : 16 Bytes */

@@ -440,7 +440,7 @@ static  CPU_TS  OS_TickListUpdateDly (void)
         p_tcb->TickRemain--;
         while (p_tcb->TickRemain == 0u) {
 #if OS_CFG_DBG_EN > 0u
-            nbr_updated++;											    /* Keep track of the number of TCBs updated          */
+            nbr_updated++;                                                /* Keep track of the number of TCBs updated          */
 #endif
             if (p_tcb->TaskState == OS_TASK_STATE_DLY) {
                 p_tcb->TaskState = OS_TASK_STATE_RDY;

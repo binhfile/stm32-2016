@@ -8,7 +8,7 @@ Module Private Functions and Variables
 
 ---------------------------------------------------------------------------*/
 
-static volatile DSTATUS Stat = STA_NOINIT;	/* Disk status */
+static volatile DSTATUS Stat = STA_NOINIT;    /* Disk status */
 
 extern USB_OTG_CORE_HANDLE          USB_OTG_Core;
 extern USBH_HOST                     USB_Host;
@@ -18,7 +18,7 @@ extern USBH_HOST                     USB_Host;
 /*-----------------------------------------------------------------------*/
 
 DSTATUS disk_initialize (
-                         BYTE drv		/* Physical drive number (0) */
+                         BYTE drv        /* Physical drive number (0) */
                            )
 {
   
@@ -39,10 +39,10 @@ DSTATUS disk_initialize (
 /*-----------------------------------------------------------------------*/
 
 DSTATUS disk_status (
-                     BYTE drv		/* Physical drive number (0) */
+                     BYTE drv        /* Physical drive number (0) */
                        )
 {
-  if (drv) return STA_NOINIT;		/* Supports only single drive */
+  if (drv) return STA_NOINIT;        /* Supports only single drive */
   return Stat;
 }
 
@@ -53,10 +53,10 @@ DSTATUS disk_status (
 /*-----------------------------------------------------------------------*/
 
 DRESULT disk_read (
-                   BYTE drv,			/* Physical drive number (0) */
-                   BYTE *buff,			/* Pointer to the data buffer to store read data */
-                   DWORD sector,		/* Start sector number (LBA) */
-                   BYTE count			/* Sector count (1..255) */
+                   BYTE drv,            /* Physical drive number (0) */
+                   BYTE *buff,            /* Pointer to the data buffer to store read data */
+                   DWORD sector,        /* Start sector number (LBA) */
+                   BYTE count            /* Sector count (1..255) */
                      )
 {
   BYTE status = USBH_MSC_OK;
@@ -95,10 +95,10 @@ DRESULT disk_read (
 
 #if _READONLY == 0
 DRESULT disk_write (
-                    BYTE drv,			/* Physical drive number (0) */
-                    const BYTE *buff,	/* Pointer to the data to be written */
-                    DWORD sector,		/* Start sector number (LBA) */
-                    BYTE count			/* Sector count (1..255) */
+                    BYTE drv,            /* Physical drive number (0) */
+                    const BYTE *buff,    /* Pointer to the data to be written */
+                    DWORD sector,        /* Start sector number (LBA) */
+                    BYTE count            /* Sector count (1..255) */
                       )
 {
   BYTE status = USBH_MSC_OK;
@@ -138,9 +138,9 @@ DRESULT disk_write (
 
 #if _USE_IOCTL != 0
 DRESULT disk_ioctl (
-                    BYTE drv,		/* Physical drive number (0) */
-                    BYTE ctrl,		/* Control code */
-                    void *buff		/* Buffer to send/receive control data */
+                    BYTE drv,        /* Physical drive number (0) */
+                    BYTE ctrl,        /* Control code */
+                    void *buff        /* Buffer to send/receive control data */
                       )
 {
   DRESULT res = RES_OK;
@@ -152,23 +152,23 @@ DRESULT disk_ioctl (
   if (Stat & STA_NOINIT) return RES_NOTRDY;
   
   switch (ctrl) {
-  case CTRL_SYNC :		/* Make sure that no pending write process */
+  case CTRL_SYNC :        /* Make sure that no pending write process */
     
     res = RES_OK;
     break;
     
-  case GET_SECTOR_COUNT :	/* Get number of sectors on the disk (DWORD) */
+  case GET_SECTOR_COUNT :    /* Get number of sectors on the disk (DWORD) */
     
     *(DWORD*)buff = (DWORD) USBH_MSC_Param.MSCapacity;
     res = RES_OK;
     break;
     
-  case GET_SECTOR_SIZE :	/* Get R/W sector size (WORD) */
+  case GET_SECTOR_SIZE :    /* Get R/W sector size (WORD) */
     *(WORD*)buff = 512;
     res = RES_OK;
     break;
     
-  case GET_BLOCK_SIZE :	/* Get erase block size in unit of sector (DWORD) */
+  case GET_BLOCK_SIZE :    /* Get erase block size in unit of sector (DWORD) */
     
     *(DWORD*)buff = 512;
     

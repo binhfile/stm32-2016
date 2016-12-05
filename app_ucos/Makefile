@@ -1,5 +1,11 @@
 ###
-TOOLCHAIN_DIR=/home/developer/App/STM32/gcc-arm-none-eabi-4_9-2015q3
+# arm-gcc on 64bit machine
+# 	Ubuntu : apt install libc6:i386
+# 	Centos : yum install libc.i686
+# st-flash 
+# 	Ubuntu : libusb-1.0-0-dev
+#
+TOOLCHAIN_DIR=~/App/gcc-arm-none-eabi-4_9-2015q3
 # GNU ARM Embedded Toolchain
 CC=$(TOOLCHAIN_DIR)/bin/arm-none-eabi-gcc
 CXX=$(TOOLCHAIN_DIR)/bin/arm-none-eabi-g++
@@ -158,4 +164,4 @@ else
 	/opt/openocd/bin/openocd -f /opt/openocd/share/openocd/scripts/board/stm32f4discovery.cfg -c "program bin/"$(BINELF)" verify reset"
 endif
 flash: $(BINDIR)/$(BIN)
-	st-flash --reset write $(BINDIR)/$(BIN) 0x08000000
+	sudo st-flash --reset write $(BINDIR)/$(BIN) 0x08000000

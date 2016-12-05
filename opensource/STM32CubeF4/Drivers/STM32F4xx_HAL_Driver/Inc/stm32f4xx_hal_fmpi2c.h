@@ -400,7 +400,7 @@ typedef struct
 #define __HAL_FMPI2C_ENABLE(__HANDLE__)                            ((__HANDLE__)->Instance->CR1 |=  FMPI2C_CR1_PE)
 #define __HAL_FMPI2C_DISABLE(__HANDLE__)                           ((__HANDLE__)->Instance->CR1 &=  ~FMPI2C_CR1_PE)
 
-#define __HAL_FMPI2C_RESET_CR2(__HANDLE__)				((__HANDLE__)->Instance->CR2 &= (uint32_t)~((uint32_t)(FMPI2C_CR2_SADD | FMPI2C_CR2_HEAD10R | FMPI2C_CR2_NBYTES | FMPI2C_CR2_RELOAD | FMPI2C_CR2_RD_WRN)))
+#define __HAL_FMPI2C_RESET_CR2(__HANDLE__)                ((__HANDLE__)->Instance->CR2 &= (uint32_t)~((uint32_t)(FMPI2C_CR2_SADD | FMPI2C_CR2_HEAD10R | FMPI2C_CR2_NBYTES | FMPI2C_CR2_RELOAD | FMPI2C_CR2_RD_WRN)))
 
 #define __HAL_FMPI2C_MEM_ADD_MSB(__ADDRESS__)                       ((uint8_t)((uint16_t)(((uint16_t)((__ADDRESS__) & (uint16_t)(0xFF00))) >> 8)))
 #define __HAL_FMPI2C_MEM_ADD_LSB(__ADDRESS__)                       ((uint8_t)((uint16_t)((__ADDRESS__) & (uint16_t)(0x00FF))))

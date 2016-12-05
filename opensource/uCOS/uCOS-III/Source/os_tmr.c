@@ -590,9 +590,9 @@ CPU_BOOLEAN  OSTmrStart (OS_TMR  *p_tmr,
         case OS_TMR_STATE_STOPPED:                          /* Start the timer                                        */
         case OS_TMR_STATE_COMPLETED:
              p_tmr->State  = OS_TMR_STATE_RUNNING;
-			 if (p_tmr->Dly == (OS_TICK)0) {
+             if (p_tmr->Dly == (OS_TICK)0) {
                  p_tmr->Remain = p_tmr->Period;
-			 } else {
+             } else {
                  p_tmr->Remain = p_tmr->Dly;
              }
              if (OSTmrListPtr ==  (OS_TMR *)0) {            /* Link into timer list                                   */

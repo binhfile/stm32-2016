@@ -20,7 +20,7 @@
 #elif defined(OS_FREERTOS)
 #define sem_t SemaphoreHandle_t
 #endif
-#define SEM_MAX_COUNT		999
+#define SEM_MAX_COUNT        999
 //sem_init() returns 0 on success; on error, -1 is returned, and errno is set to indicate the error.
 int sem_init(sem_t *sem, int pshared, unsigned int value);
 //sem_destroy() returns 0 on success; on error, -1 is returned, and errno is set to indicate the error. 

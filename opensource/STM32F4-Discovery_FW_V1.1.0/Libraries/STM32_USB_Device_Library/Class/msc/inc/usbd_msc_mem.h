@@ -39,7 +39,7 @@
 /** @defgroup USBD_MEM_Exported_Defines
   * @{
   */ 
-#define USBD_STD_INQUIRY_LENGTH		36
+#define USBD_STD_INQUIRY_LENGTH        36
 /**
   * @}
   */ 

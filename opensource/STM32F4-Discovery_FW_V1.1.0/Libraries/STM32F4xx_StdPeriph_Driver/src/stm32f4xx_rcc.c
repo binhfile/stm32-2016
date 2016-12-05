@@ -23,7 +23,7 @@
   *          SRAM, Flash and JTAG.
   *           - There is no prescaler on High speed (AHB) and Low speed (APB) busses;
   *             all peripherals mapped on these busses are running at HSI speed.
-  *       	  - The clock for all peripherals is switched off, except the SRAM and FLASH.
+  *             - The clock for all peripherals is switched off, except the SRAM and FLASH.
   *           - All GPIOs are in input floating state, except the JTAG pins which
   *             are assigned to be used for debug purpose.
   *        
@@ -658,7 +658,7 @@ void RCC_MCO2Config(uint32_t RCC_MCO2Source, uint32_t RCC_MCO2Div)
  |---------------|----------------|----------------|-----------------|-----------------| 
  |7WS(8CPU cycle)|      NA        |      NA        |120 < HCLK <= 138|112 < HCLK <= 120| 
  +-------------------------------------------------------------------------------------+    
-   @note When VOS bit (in PWR_CR register) is reset to '0’, the maximum value of HCLK is 144 MHz.
+   @note When VOS bit (in PWR_CR register) is reset to '0ï¿½, the maximum value of HCLK is 144 MHz.
          You can use PWR_MainRegulatorModeConfig() function to set or reset this bit.
 
 @endverbatim

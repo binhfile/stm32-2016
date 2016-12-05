@@ -6,9 +6,9 @@
  */
 
 #ifndef UNISTD_H
-#define	UNISTD_H
+#define    UNISTD_H
 
-#ifdef	__cplusplus
+#ifdef    __cplusplus
 extern "C" {
 #endif
 #include <stdint.h>
@@ -16,14 +16,14 @@ extern "C" {
 #ifndef __useconds_t
 #define __useconds_t    uint32_t
 #endif
-unsigned int 	sleep (unsigned int __seconds);
-int 			usleep_s (unsigned int __useconds);/*security issue*/
-int 			nanosleep(const struct timespec *req, struct timespec *rem);
-int 			clock_gettime(clockid_t clk_id, struct timespec *tp);
+unsigned int     sleep (unsigned int __seconds);
+int             usleep_s (unsigned int __useconds);/*security issue*/
+int             nanosleep(const struct timespec *req, struct timespec *rem);
+int             clock_gettime(clockid_t clk_id, struct timespec *tp);
 
-#ifdef	__cplusplus
+#ifdef    __cplusplus
 }
 #endif
 
-#endif	/* UNISTD_H */
+#endif    /* UNISTD_H */
 

@@ -402,7 +402,7 @@ static uint32_t DCD_HandleUSBSuspend_ISR(USB_OTG_CORE_HANDLE *pdev)
   
   if((pdev->cfg.low_power) && (dsts.b.suspsts == 1))
   {
-	/*  switch-off the clocks */
+    /*  switch-off the clocks */
     power.d32 = 0;
     power.b.stoppclk = 1;
     USB_OTG_MODIFY_REG32(pdev->regs.PCGCCTL, 0, power.d32);  

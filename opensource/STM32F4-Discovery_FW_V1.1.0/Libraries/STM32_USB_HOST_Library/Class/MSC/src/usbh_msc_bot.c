@@ -229,9 +229,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
         if(remainingDataLength > USBH_MSC_MPS_SIZE)
         {
           USBH_BulkReceiveData (pdev,
-	                        datapointer, 
-			        USBH_MSC_MPS_SIZE , 
-			        MSC_Machine.hc_num_in);
+                            datapointer, 
+                    USBH_MSC_MPS_SIZE , 
+                    MSC_Machine.hc_num_in);
           
           remainingDataLength -= USBH_MSC_MPS_SIZE;
           datapointer = datapointer + USBH_MSC_MPS_SIZE;
@@ -244,9 +244,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
         else
         {       
           USBH_BulkReceiveData (pdev,
-	                        datapointer, 
-			        remainingDataLength , 
-			        MSC_Machine.hc_num_in);
+                            datapointer, 
+                    remainingDataLength , 
+                    MSC_Machine.hc_num_in);
           
           remainingDataLength = 0; /* Reset this value and keep in same state */
         }
@@ -298,9 +298,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
         else
         {
           USBH_BulkSendData (pdev,
-	                     datapointer, 
-			     remainingDataLength , 
-			     MSC_Machine.hc_num_out);
+                         datapointer, 
+                 remainingDataLength , 
+                 MSC_Machine.hc_num_out);
           
           remainingDataLength = 0; /* Reset this value and keep in same state */   
         }      
@@ -309,9 +309,9 @@ void USBH_MSC_HandleBOTXfer (USB_OTG_CORE_HANDLE *pdev ,USBH_HOST *phost)
       else if(URB_Status == URB_NOTREADY)
       {
         USBH_BulkSendData (pdev,
-	                   (datapointer - USBH_MSC_MPS_SIZE), 
-			   USBH_MSC_MPS_SIZE , 
-			   MSC_Machine.hc_num_out);
+                       (datapointer - USBH_MSC_MPS_SIZE), 
+               USBH_MSC_MPS_SIZE , 
+               MSC_Machine.hc_num_out);
       }
       
       else if(URB_Status == URB_STALL)

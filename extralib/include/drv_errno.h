@@ -6,9 +6,9 @@
  */
 
 #ifndef DRV_ERRNO_H
-#define	DRV_ERRNO_H
+#define    DRV_ERRNO_H
 
-#ifdef	__cplusplus
+#ifdef    __cplusplus
 extern "C" {
 #endif
 extern int errno;
@@ -141,9 +141,9 @@ extern int errno;
 #define EMEDIUMTYPE     124     /* Wrong medium type */
 
 
-#ifdef	__cplusplus
+#ifdef    __cplusplus
 }
 #endif
 
-#endif	/* DRV_ERRNO_H */
+#endif    /* DRV_ERRNO_H */
 
